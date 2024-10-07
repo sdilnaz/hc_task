@@ -1,5 +1,7 @@
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SharedModels.Events;
 using OrderService.Data;
 using OrderService.Dtos.Order;
 using OrderService.Mappers;
@@ -11,9 +13,11 @@ namespace OrderService.Controllers
     public class OrderController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public OrderController(ApplicationDBContext context)
+        private readonly IPublishEndpoint _publishEndpoint;
+        public OrderController(ApplicationDBContext context, IPublishEndpoint publishEndpoint)
         {
             _context = context;
+            _publishEndpoint = publishEndpoint;
         }
         
         [HttpGet]
@@ -43,6 +47,16 @@ namespace OrderService.Controllers
             var orderModel = orderDto.ToOrderFromCreateDTO();
             await _context.Orders.AddAsync(orderModel);
             await _context.SaveChangesAsync();
+
+            var orderCreatedEvent = new OrderCreatedEvent
+            {
+                Id = orderModel.Id,
+                ProductName = orderModel.ProductName,
+                Quantity = orderModel.Quantity,
+                Price = orderModel.Price
+            };
+
+            await _publishEndpoint.Publish(orderCreatedEvent);
             return CreatedAtAction(nameof(GetById), new {id = orderModel.Id}, orderModel.ToOrderDto());
         }
 

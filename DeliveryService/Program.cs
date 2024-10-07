@@ -1,18 +1,20 @@
 using MassTransit;
-using OrderService.Extensions;
+using DeliveryService.Extensions;
+using DeliveryService.Consumers;
+using SharedModels.Events;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 builder.Services.ConfigureDBContext(builder.Configuration);
 
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<OrderCreatedConsumer>();
+    
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("localhost", "/", h =>
@@ -20,19 +22,24 @@ builder.Services.AddMassTransit(x =>
             h.Username("guest");
             h.Password("guest");
         });
-        cfg.ConfigureEndpoints(context);
+        
+        cfg.ReceiveEndpoint("order-created-event", e =>
+        {
+            e.Consumer<OrderCreatedConsumer>(context);
+        });
     });
+
+    
 });
 
-
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
