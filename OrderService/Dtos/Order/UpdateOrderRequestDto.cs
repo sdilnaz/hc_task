@@ -1,4 +1,4 @@
-namespace task1.Dtos.Order
+namespace OrderService.Dtos.Order
 {
     public record UpdateOrderRequestDto
     {

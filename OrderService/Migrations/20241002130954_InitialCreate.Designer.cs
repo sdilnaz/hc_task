@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using task1.Data;
+using OrderService.Data;
 
 #nullable disable
 
-namespace task1.Migrations
+namespace OrderService.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
     [Migration("20241002130954_InitialCreate")]
@@ -24,7 +24,7 @@ namespace task1.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("task1.Models.Order", b =>
+            modelBuilder.Entity("OrderService.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

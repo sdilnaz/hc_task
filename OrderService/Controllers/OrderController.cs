@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using task1.Data;
-using task1.Dtos.Order;
-using task1.Mappers;
+using OrderService.Data;
+using OrderService.Dtos.Order;
+using OrderService.Mappers;
 
-namespace task1.Controllers
+namespace OrderService.Controllers
 {
     [Route("api/order")]
     [ApiController]

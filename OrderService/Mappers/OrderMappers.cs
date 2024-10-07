@@ -1,7 +1,7 @@
-using task1.Dtos.Order;
-using task1.Models;
+using OrderService.Dtos.Order;
+using OrderService.Models;
 
-namespace task1.Mappers
+namespace OrderService.Mappers
 {
     public static class OrderMappers
     {

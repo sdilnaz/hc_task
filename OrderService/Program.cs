@@ -1,4 +1,4 @@
-using task1.Extensions;
+using OrderService.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

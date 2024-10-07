@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using task1.Data;
+using OrderService.Data;
 
-namespace task1.Extensions
+namespace OrderService.Extensions
 {
     public static class ServiceExtensions
     {

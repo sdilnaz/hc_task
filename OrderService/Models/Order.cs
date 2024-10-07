@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace task1.Models
+namespace OrderService.Models
 {
     public class Order
     {

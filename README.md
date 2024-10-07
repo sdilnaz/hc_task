@@ -1,8 +1,8 @@
-# OrderService
-
-# Task1 .NET Application
+# .NET Application
 
 ## Overview
+
+# Task 1
 
 This is a .NET application for managing orders. It connects to a PostgreSQL database and uses Entity Framework Core for data access.
 
@@ -45,7 +45,7 @@ To get started with the OrderService application, follow these steps:
    dotnet run
    ```
 
-7. Open your web browser and navigate to `http://localhost:5021` to access the OrderService application and `http://localhost:5021/swagger`  to check functionality.
+7. Open your web browser and navigate to `http://localhost:5021` to access the OrderService application and `http://localhost:5021/swagger` to check functionality.
 
 ## Usage
 

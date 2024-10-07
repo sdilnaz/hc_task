@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace task1.Models.Configurations
+namespace OrderService.Models.Configurations
 {
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {

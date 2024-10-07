@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using task1.Models;
-using task1.Models.Configurations;
+using OrderService.Models;
+using OrderService.Models.Configurations;
 
-namespace task1.Data
+namespace OrderService.Data
 {
     public class ApplicationDBContext : DbContext
     {
