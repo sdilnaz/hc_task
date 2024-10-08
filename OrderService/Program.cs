@@ -1,8 +1,6 @@
-using MassTransit;
 using OrderService.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -10,9 +8,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureDBContext(builder.Configuration);
 builder.Services.AddMassTransitWithRabbitMQ(builder.Configuration);
 
-
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {

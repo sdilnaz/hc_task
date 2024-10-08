@@ -1,7 +1,6 @@
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SharedModels.Events;
 using OrderService.Data;
 using OrderService.Dtos.Order;
 using OrderService.Mappers;

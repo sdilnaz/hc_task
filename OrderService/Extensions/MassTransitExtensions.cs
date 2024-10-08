@@ -1,5 +1,4 @@
 using MassTransit;
-using Microsoft.Extensions.Configuration;
 using OrderService.Configurations;
 
 namespace OrderService.Extensions

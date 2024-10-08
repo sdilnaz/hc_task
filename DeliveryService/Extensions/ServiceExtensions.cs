@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using DeliveryService.Data;
-using MassTransit;
-using DeliveryService.Consumers;
 
 namespace DeliveryService.Extensions
 {

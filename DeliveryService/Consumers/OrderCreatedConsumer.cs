@@ -1,8 +1,6 @@
 using MassTransit;
-using DeliveryService.Models;
 using SharedModels.Events;
 using DeliveryService.Data;
-using Microsoft.Extensions.Logging;
 using DeliveryService.Mappers;
 
 namespace DeliveryService.Consumers
