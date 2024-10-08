@@ -1,4 +1,3 @@
-
 namespace OrderService.Dtos.Order
 {
     public record OrderDto

@@ -1,5 +1,6 @@
 using OrderService.Dtos.Order;
 using OrderService.Models;
+using SharedModels.Events;
 
 namespace OrderService.Mappers
 {
@@ -25,6 +26,16 @@ namespace OrderService.Mappers
                 Price = orderDto.Price
                 
             };
+        }
+
+        public static OrderCreatedEvent ToOrderCreatedEvent(this Order order)
+        {
+            return new OrderCreatedEvent(
+                order.Id,
+                order.ProductName,
+                order.Quantity,
+                order.Price
+            );
         }
     }
 }

@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OrderService.Data;
@@ -11,11 +12,13 @@ namespace OrderService.Controllers
     public class OrderController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        public OrderController(ApplicationDBContext context)
+        private readonly IPublishEndpoint _publishEndpoint;
+        public OrderController(ApplicationDBContext context, IPublishEndpoint publishEndpoint)
         {
             _context = context;
+            _publishEndpoint = publishEndpoint;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -23,7 +26,6 @@ namespace OrderService.Controllers
             var orderDtos = orders.Select(s => s.ToOrderDto());
             return Ok(orders);
         }
-
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
@@ -36,14 +38,17 @@ namespace OrderService.Controllers
             return Ok(order.ToOrderDto());
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateOrderRequestDto orderDto)
         {
             var orderModel = orderDto.ToOrderFromCreateDTO();
             await _context.Orders.AddAsync(orderModel);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new {id = orderModel.Id}, orderModel.ToOrderDto());
+
+            var orderCreatedEvent = orderModel.ToOrderCreatedEvent();
+
+            await _publishEndpoint.Publish(orderCreatedEvent);
+            return CreatedAtAction(nameof(GetById), new { id = orderModel.Id }, orderModel.ToOrderDto());
         }
 
         [HttpPut("{id}")]
@@ -58,7 +63,7 @@ namespace OrderService.Controllers
             orderModel.ProductName = updateDto.ProductName;
             orderModel.Quantity = updateDto.Quantity;
             orderModel.Price = updateDto.Price;
-            
+
             await _context.SaveChangesAsync();
             return Ok(orderModel.ToOrderDto());
         }
