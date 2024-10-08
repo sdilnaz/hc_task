@@ -8,7 +8,6 @@ namespace DeliveryService.Data
         public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
         }
-
         public DbSet<DeliveryRequest> DeliveryRequests { get; set; }
     }
 }
