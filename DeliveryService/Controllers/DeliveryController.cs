@@ -17,21 +17,21 @@ namespace DeliveryService.Controllers
         }
 
         [HttpPut("{id}/take")]
-        public async Task<IActionResult> TakeInWork([FromRoute] int id)
+        public async Task<IActionResult> TakeInWork([FromRoute] int id, CancellationToken cancellationToken)
         {
             var deliveryRequest = await _context.DeliveryRequests.FindAsync(id);
             if (deliveryRequest == null)
             {
-                return NotFound("No delivery request found with id {id}");
+                return NotFound($"No delivery request found with id {id}");
             }
-            deliveryRequest.Status = "Взята в работу";
+            deliveryRequest.Status = DeliveryStatus.TakenIntoWork;
             _context.DeliveryRequests.Update(deliveryRequest);
-            await _context.SaveChangesAsync();
-            return Ok("Delivery Request with id {id} is in work");
+            await _context.SaveChangesAsync(cancellationToken);
+            return Ok($"Delivery Request with id {id} is in work");
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery)
+        public async Task<IActionResult> GetAll([FromQuery] PaginationQuery paginationQuery, CancellationToken cancellationToken)
         {
             if (paginationQuery.PageNumber <= 0) paginationQuery.PageNumber = 1;
             if (paginationQuery.PageSize <= 0) paginationQuery.PageSize = 10;
@@ -40,7 +40,7 @@ namespace DeliveryService.Controllers
                 .OrderBy(d => d.CreatedAt)
                 .Skip((paginationQuery.PageNumber - 1) * paginationQuery.PageSize)
                 .Take(paginationQuery.PageSize)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             var response = new
             {
@@ -52,27 +52,27 @@ namespace DeliveryService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
         {
-            var deliveryRequest = await _context.DeliveryRequests.FindAsync(id);
+            var deliveryRequest = await _context.DeliveryRequests.FindAsync(id, cancellationToken);
             if (deliveryRequest == null)
             {
-                return NotFound("No delivery request found with id {id}");
+                return NotFound($"No delivery request found with id {id}");
             }
             return Ok(deliveryRequest);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
         {
-            var deliveryRequest = await _context.DeliveryRequests.FindAsync(id);
+            var deliveryRequest = await _context.DeliveryRequests.FindAsync(id, cancellationToken);
             if (deliveryRequest == null)
             {
-                return NotFound("No delivery request found with id {id}");
+                return NotFound($"No delivery request found with id {id}");
             }
             _context.DeliveryRequests.Remove(deliveryRequest);
-            await _context.SaveChangesAsync();
-            return Ok("Delivery Request with id {id} is deleted");
+            await _context.SaveChangesAsync(cancellationToken);
+            return Ok($"Delivery Request with id {id} is deleted");
         }
     }
 }
