@@ -17,7 +17,9 @@ namespace DeliveryService.Extensions
 
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<OrderCreatedConsumer>();
+                x.AddConsumer<OrderCreatedConsumer>(config=> {
+                    config.UseMessageRetry(r => r.Interval(3, TimeSpan.FromSeconds(5)));
+                });
 
                 x.UsingRabbitMq((context, cfg) =>
                 {

@@ -23,6 +23,30 @@
       ],
       "UpstreamPathTemplate": "/api/order/{id}",
       "UpstreamHttpMethod": ["GET", "DELETE", "PUT"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/delivery",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5022
+        }
+      ],
+      "UpstreamPathTemplate": "/api/delivery",
+      "UpstreamHttpMethod": ["GET", "POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/delivery/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5022
+        }
+      ],
+      "UpstreamPathTemplate": "/api/delivery/{id}",
+      "UpstreamHttpMethod": ["GET", "DELETE"]
     }
   ],
   "GlobalConfiguration": {
