@@ -2,6 +2,7 @@ using MassTransit;
 using SharedModels.Events;
 using DeliveryService.Data;
 using DeliveryService.Mappers;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeliveryService.Consumers
 {
@@ -18,12 +19,29 @@ namespace DeliveryService.Consumers
 
         public async Task Consume(ConsumeContext<OrderCreatedEvent> context)
         {
-            var deliveryRequest = context.Message.ToDeliveryRequest();
+            var orderId = context.Message.Id;
+            try
+            {
+                var existingDeliveryRequest = await _context.DeliveryRequests
+                    .FirstOrDefaultAsync(x => x.OrderId == orderId, context.CancellationToken);
+                if (existingDeliveryRequest != null)
+                {
+                    _logger.LogInformation("Delivery request already exists for OrderID: {orderId}", orderId);
+                    return;
+                }
 
-            await _context.DeliveryRequests.AddAsync(deliveryRequest);
-            await _context.SaveChangesAsync();
+                var deliveryRequest = context.Message.ToDeliveryRequest();
 
-            _logger.LogInformation($"Delivery Request Created for OrderID: {context.Message.Id}");
+                await _context.DeliveryRequests.AddAsync(deliveryRequest, context.CancellationToken);
+                await _context.SaveChangesAsync(context.CancellationToken);
+
+                _logger.LogInformation("Delivery request created for OrderID: {orderId}", orderId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error creating delivery request for OrderID: {orderId}, Error: {ex.Message}", orderId, ex.Message);
+                throw;
+            }
         }
     }
 }

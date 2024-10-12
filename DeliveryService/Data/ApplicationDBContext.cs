@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using DeliveryService.Models;
+using DeliveryService.Models.Configurations;
 
 namespace DeliveryService.Data
 {
@@ -9,5 +10,10 @@ namespace DeliveryService.Data
         {
         }
         public DbSet<DeliveryRequest> DeliveryRequests { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new DeliveryConfiguration());
+        }
     }
 }
