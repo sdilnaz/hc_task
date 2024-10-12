@@ -17,7 +17,7 @@ namespace OrderService.Middlewares
                 await _next(context);
             }
             catch(Exception ex){
-                _logger.LogError($"Error: {ex.Message}");
+                _logger.LogError("Error: {ex.Message}", ex.Message);
                 await HandleExceptionAsync(context, ex);
             }
         }

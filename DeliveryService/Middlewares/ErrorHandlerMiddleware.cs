@@ -21,7 +21,7 @@ namespace DeliveryService.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error: {ex.Message}");
+                _logger.LogError("Error: {ex.Message}", ex.Message);
                 await HandleExceptionAsync(context, ex);
             }
         }

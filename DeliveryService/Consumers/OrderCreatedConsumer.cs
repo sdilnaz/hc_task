@@ -23,23 +23,23 @@ namespace DeliveryService.Consumers
             try
             {
                 var existingDeliveryRequest = await _context.DeliveryRequests
-                    .FirstOrDefaultAsync(x => x.OrderId == orderId);
+                    .FirstOrDefaultAsync(x => x.OrderId == orderId, context.CancellationToken);
                 if (existingDeliveryRequest != null)
                 {
-                    _logger.LogInformation($"Delivery request already exists for OrderID: {orderId}");
+                    _logger.LogInformation("Delivery request already exists for OrderID: {orderId}", orderId);
                     return;
                 }
 
                 var deliveryRequest = context.Message.ToDeliveryRequest();
 
-                await _context.DeliveryRequests.AddAsync(deliveryRequest);
-                await _context.SaveChangesAsync();
+                await _context.DeliveryRequests.AddAsync(deliveryRequest, context.CancellationToken);
+                await _context.SaveChangesAsync(context.CancellationToken);
 
-                _logger.LogInformation($"Delivery request created for OrderID: {orderId}");
+                _logger.LogInformation("Delivery request created for OrderID: {orderId}", orderId);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error creating delivery request for OrderID: {orderId}, Error: {ex.Message}");
+                _logger.LogError("Error creating delivery request for OrderID: {orderId}, Error: {ex.Message}", orderId, ex.Message);
                 throw;
             }
         }
