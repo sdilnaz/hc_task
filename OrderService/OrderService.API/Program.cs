@@ -4,6 +4,8 @@ using OrderService.Infrastructure.Extensions;
 using OrderService.Infrastructure.Presistence;
 using OrderService.API.Middlewares;
 using OrderService.Application.Mappers;
+using OrderService.Core.Interfaces;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,10 @@ builder.Services.AddMassTransitWithRabbitMQ(builder.Configuration);
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderProcessingService>();
 builder.Services.AddAutoMapper(typeof(OrderMappingProfile));
+builder.Services.AddAutoMapper(typeof(OutboxProfile));
+builder.Services.AddHangfireServices(builder.Configuration);
+builder.Services.AddScoped<IOutboxService, OutboxService>();
+
 
 var app = builder.Build();
 
@@ -24,6 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHangfireDashboard("/hangfire");
+app.UseBackgroundJobs();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthorization();

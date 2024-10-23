@@ -10,11 +10,13 @@ namespace DeliveryService.Application.Mappers
         public DeliveryRequestProfile()
         {
             CreateMap<OrderCreatedEvent, DeliveryRequest>()
-                .ForMember(dest => dest.OrderId, 
+                .ForMember(dest => dest.Id,
+                    opt => opt.Ignore())
+                .ForMember(dest => dest.OrderId,
                     opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.CreatedAt, 
+                .ForMember(dest => dest.CreatedAt,
                     opt => opt.MapFrom(_ => DateTime.UtcNow))
-                .ForMember(dest => dest.Status, 
+                .ForMember(dest => dest.Status,
                     opt => opt.MapFrom(_ => DeliveryStatus.Created));
 
             CreateMap<DeliveryRequest, DeliveryRequestDto>()

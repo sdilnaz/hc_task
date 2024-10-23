@@ -8,6 +8,8 @@ namespace DeliveryService.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<DeliveryRequest> builder)
         {
+            builder.HasKey(d => d.Id);
+            builder.Property(d => d.Id).ValueGeneratedOnAdd();
             builder.Property(o => o.Status)
                 .HasConversion(
                     v => v.ToString(),

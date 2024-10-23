@@ -13,6 +13,8 @@ namespace OrderService.Application.Mappers
 
             CreateMap<CreateOrderRequestDto, Order>();
 
+            CreateMap<UpdateOrderRequestDto, Order>();
+
             CreateMap<Order, OrderCreatedEvent>()
                 .ConstructUsing(order => new OrderCreatedEvent(
                     order.Id,

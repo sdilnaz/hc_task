@@ -1,6 +1,6 @@
 using OrderService.Core.Models;
 
-namespace OrderService.Application.Interfaces
+namespace OrderService.Core.Interfaces
 {
     public interface IOrderRepository
     {
@@ -9,5 +9,7 @@ namespace OrderService.Application.Interfaces
         Task AddOrderAsync(Order order, CancellationToken cancellationToken);
         Task SaveChangesAsync(CancellationToken cancellationToken);
         Task DeleteOrderAsync(Order order, CancellationToken cancellationToken);
+        Task AddOutboxMessageAsync(OutboxMessage message, CancellationToken cancellationToken);
+        Task<List<OutboxMessage>> GetUnprocessedOutboxMessagesAsync(CancellationToken cancellationToken);
     }
 }

@@ -1,26 +1,21 @@
 using OrderService.Application.Dtos.Order;
 using OrderService.Application.Interfaces;
-using MassTransit;
 using Microsoft.Extensions.Logging;
-using OrderService.Application.Mappers;
 using AutoMapper;
 using OrderService.Core.Models;
 using SharedModels.Events;
+using OrderService.Core.Interfaces;
 
 namespace OrderService.Application.Services
 {
     public class OrderProcessingService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IPublishEndpoint _publishEndpoint;
-        private readonly ILogger<OrderProcessingService> _logger;
         private readonly IMapper _mapper;
 
-        public OrderProcessingService(IOrderRepository orderRepository, IPublishEndpoint publishEndpoint, ILogger<OrderProcessingService> logger, IMapper mapper)
+        public OrderProcessingService(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
-            _publishEndpoint = publishEndpoint;
-            _logger = logger;
             _mapper = mapper;
         }
 
@@ -45,8 +40,10 @@ namespace OrderService.Application.Services
             await _orderRepository.SaveChangesAsync(cancellationToken);
 
             var orderCreatedEvent = _mapper.Map<OrderCreatedEvent>(order);
-            await _publishEndpoint.Publish(orderCreatedEvent, cancellationToken);
+            var outboxMessage = _mapper.Map<OutboxMessage>(orderCreatedEvent);
 
+            await _orderRepository.AddOutboxMessageAsync(outboxMessage, cancellationToken);
+            await _orderRepository.SaveChangesAsync(cancellationToken);
             return _mapper.Map<OrderDto>(order);
         }
 
