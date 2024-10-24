@@ -1,4 +1,4 @@
-namespace OrderService.Core.Models
+namespace OutboxLibrary.Models
 {
     public class OutboxMessage
     {

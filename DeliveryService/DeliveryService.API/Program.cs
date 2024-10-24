@@ -4,7 +4,7 @@ using DeliveryService.Application.Handlers;
 using DeliveryService.Application.Mappers;
 using DeliveryService.Core.Interfaces;
 using DeliveryService.Infrastructure.Extensions;
-using DeliveryService.Infrastructure.Presistence;
+using DeliveryService.Infrastructure.Persistence;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +18,6 @@ builder.Services.AddMediatR(typeof(GetAllDeliveryRequestsQueryHandler).Assembly)
 builder.Services.AddScoped<IDeliveryRequestRepository, DeliveryRequestRepository>();
 builder.Services.AddScoped<IDeliveryCreateRepository, DeliveryCreateRepository>();
 builder.Services.AddAutoMapper(typeof(DeliveryRequestProfile));
-
 
 var app = builder.Build();
 

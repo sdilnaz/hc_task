@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrderService.Core\OrderService.Core.csproj" />
+    <ProjectReference Include="..\..\OutboxLibrary\OutboxLibrary.csproj" />
   </ItemGroup>
 
 </Project>

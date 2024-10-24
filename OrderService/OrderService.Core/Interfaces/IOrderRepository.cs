@@ -9,7 +9,5 @@ namespace OrderService.Core.Interfaces
         Task AddOrderAsync(Order order, CancellationToken cancellationToken);
         Task SaveChangesAsync(CancellationToken cancellationToken);
         Task DeleteOrderAsync(Order order, CancellationToken cancellationToken);
-        Task AddOutboxMessageAsync(OutboxMessage message, CancellationToken cancellationToken);
-        Task<List<OutboxMessage>> GetUnprocessedOutboxMessagesAsync(CancellationToken cancellationToken);
     }
 }

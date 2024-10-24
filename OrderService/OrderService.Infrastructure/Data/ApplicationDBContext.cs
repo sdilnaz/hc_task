@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using OrderService.Core.Models;
 using OrderService.Infrastructure.Configurations;
+using OutboxLibrary.Models;
+using OutboxLibrary.Configurations;
 
 namespace OrderService.Infrastructure.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : DbContext, IApplicationDbContext
     {
         public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {

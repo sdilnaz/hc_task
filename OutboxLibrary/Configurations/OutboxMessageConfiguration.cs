@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OrderService.Core.Models;
+using OutboxLibrary.Models;
 
-namespace OrderService.Infrastructure.Configurations
+namespace OutboxLibrary.Configurations
 {
     public class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage>
     {

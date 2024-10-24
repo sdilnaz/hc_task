@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeliveryService.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeliveryService.API", "DeliveryService\DeliveryService.API\DeliveryService.API.csproj", "{44B54C89-FACF-49EE-879D-E6DAD75AF6A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutboxLibrary", "OutboxLibrary\OutboxLibrary.csproj", "{37B8E61D-B1F1-4CA2-A3D8-A255D0336540}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{44B54C89-FACF-49EE-879D-E6DAD75AF6A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B54C89-FACF-49EE-879D-E6DAD75AF6A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B54C89-FACF-49EE-879D-E6DAD75AF6A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37B8E61D-B1F1-4CA2-A3D8-A255D0336540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37B8E61D-B1F1-4CA2-A3D8-A255D0336540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37B8E61D-B1F1-4CA2-A3D8-A255D0336540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37B8E61D-B1F1-4CA2-A3D8-A255D0336540}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7C1F65DE-FBFB-4F76-9414-11716778D126} = {F9826EDC-3ED5-4695-A8E1-CCFC85064A86}

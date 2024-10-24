@@ -1,35 +1,37 @@
 using System.Text.Json;
 using MassTransit;
 using Microsoft.Extensions.Logging;
-using OrderService.Core.Interfaces;
-using OrderService.Core.Models;
+using OutboxLibrary.Interfaces;
+using OutboxLibrary.Models;
 using SharedModels.Events;
 
-namespace OrderService.Application.Services
+namespace OutboxLibrary.Services
 {
     public class OutboxService : IOutboxService
     {
-        private readonly IOrderRepository _orderRepository;
+        private readonly IOutboxRepository _outboxRepository;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILogger<OutboxService> _logger;
 
-        public OutboxService(IOrderRepository orderRepository, ILogger<OutboxService> logger, IPublishEndpoint publishEndpoint)
+        public OutboxService(IOutboxRepository outboxRepository, ILogger<OutboxService> logger, IPublishEndpoint publishEndpoint)
         {
-            _orderRepository = orderRepository;
+            _outboxRepository = outboxRepository;
             _logger = logger;
             _publishEndpoint = publishEndpoint;
         }
 
         public async Task ProcessOutboxMessagesAsync(CancellationToken cancellationToken)
         {
-            var messages = await _orderRepository.GetUnprocessedOutboxMessagesAsync(cancellationToken);
+            var messages = await _outboxRepository.GetUnprocessedOutboxMessagesAsync(cancellationToken);
             foreach (var message in messages)
             {
                 try
                 {
                     _logger.LogInformation("Publishing message: {MessageId}, Type: {Type}", message.Id, message.Type);
                     var eventMessage = DeserializeEvent(message);
+
                     await _publishEndpoint.Publish(eventMessage, cancellationToken);
+
                     message.Processed = true;
                     message.ProcessedAt = DateTime.UtcNow;
                     _logger.LogInformation("Message {MessageId} processed successfully at {ProcessedAt}.", message.Id, message.ProcessedAt);
@@ -39,7 +41,7 @@ namespace OrderService.Application.Services
                     _logger.LogError(e, "Error publishing message with ID {MessageId}", message.Id);
                 }
             }
-            await _orderRepository.SaveChangesAsync(cancellationToken);
+            await _outboxRepository.SaveChangesAsync(cancellationToken);
         }
 
         private object DeserializeEvent(OutboxMessage message)

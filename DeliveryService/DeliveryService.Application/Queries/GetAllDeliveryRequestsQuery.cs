@@ -1,5 +1,4 @@
 using DeliveryService.Application.Dtos;
-using DeliveryService.Core.Models;
 using MediatR;
 
 namespace DeliveryService.Application.Queries

@@ -3,7 +3,7 @@ using DeliveryService.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using DeliveryService.Infrastructure.Data;
 
-namespace DeliveryService.Infrastructure.Presistence
+namespace DeliveryService.Infrastructure.Persistence
 {
     public class DeliveryCreateRepository : IDeliveryCreateRepository
     {

@@ -1,5 +1,5 @@
 using AutoMapper;
-using OrderService.Core.Models;
+using OutboxLibrary.Models;
 using SharedModels.Events;
 using System.Text.Json;
 

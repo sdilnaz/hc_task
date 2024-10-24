@@ -3,7 +3,7 @@ using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OrderService.Core.Interfaces;
+using OutboxLibrary.Interfaces;
 
 namespace OrderService.Infrastructure.Extensions
 {

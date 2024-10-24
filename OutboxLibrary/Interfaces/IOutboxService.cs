@@ -1,4 +1,4 @@
-namespace OrderService.Core.Interfaces
+namespace OutboxLibrary.Interfaces
 {
     public interface IOutboxService
     {
