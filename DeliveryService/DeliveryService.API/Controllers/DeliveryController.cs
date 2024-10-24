@@ -1,3 +1,4 @@
+using AutoMapper;
 using DeliveryService.Application.Commands;
 using DeliveryService.Application.Queries;
 using MediatR;
@@ -9,31 +10,33 @@ namespace DeliveryService.API.Controllers
     [ApiController]
     public class DeliveryController : ControllerBase
     {
-        private readonly IMediator _mediator;
+        private readonly ISender _sender;
+        private readonly IMapper _mapper;
 
-        public DeliveryController(IMediator mediator)
+        public DeliveryController(ISender sender, IMapper mapper)
         {
-            _mediator = mediator;
+            _sender = sender;
+            _mapper = mapper;
         }
 
         [HttpPut("{id}/take")]
         public async Task<IActionResult> TakeInWork([FromRoute] int id, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new TakeDeliveryRequestCommand(id), cancellationToken);
+            await _sender.Send(new TakeDeliveryRequestCommand(id), cancellationToken);
             return Ok($"Delivery Request with id {id} is in work");
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
         {
-            var deliveries = await _mediator.Send(new GetAllDeliveryRequestsQuery(pageNumber, pageSize), cancellationToken);
+            var deliveries = await _sender.Send(new GetAllDeliveryRequestsQuery(pageNumber, pageSize), cancellationToken);
             return Ok(new { CurrentPage = pageNumber, Items = deliveries });
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id, CancellationToken cancellationToken)
         {
-            var deliveryRequest = await _mediator.Send(new GetDeliveryRequestByIdQuery(id), cancellationToken);
+            var deliveryRequest = await _sender.Send(new GetDeliveryRequestByIdQuery(id), cancellationToken);
             if (deliveryRequest != null)
             {
                 return Ok(deliveryRequest);
@@ -47,7 +50,7 @@ namespace DeliveryService.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
         {
-            await _mediator.Send(new DeleteDeliveryRequestCommand(id), cancellationToken);
+            await _sender.Send(new DeleteDeliveryRequestCommand(id), cancellationToken);
             return Ok($"Delivery Request with id {id} is deleted");
         }
     }

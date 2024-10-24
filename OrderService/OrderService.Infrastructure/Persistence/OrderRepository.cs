@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using OrderService.Application.Interfaces;
+using OrderService.Core.Interfaces;
 using OrderService.Core.Models;
 using OrderService.Infrastructure.Data;
 
-namespace OrderService.Infrastructure.Presistence
+namespace OrderService.Infrastructure.Persistence
 {
     public class OrderRepository : IOrderRepository
     {

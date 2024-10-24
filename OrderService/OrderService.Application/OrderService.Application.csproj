@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\OrderService.Core\OrderService.Core.csproj" />
     <ProjectReference Include="..\..\SharedModels\SharedModels.csproj" />
+    <ProjectReference Include="..\..\OutboxLibrary\OutboxLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

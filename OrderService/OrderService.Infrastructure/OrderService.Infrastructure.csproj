@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.14" />
+    <PackageReference Include="Hangfire.PostgreSQL" Version="1.20.10" />
     <PackageReference Include="MassTransit" Version="8.2.5" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
@@ -27,7 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrderService.Core\OrderService.Core.csproj" />
-    <ProjectReference Include="..\OrderService.Application\OrderService.Application.csproj" />
+    <ProjectReference Include="..\..\OutboxLibrary\OutboxLibrary.csproj" />
   </ItemGroup>
 
 </Project>

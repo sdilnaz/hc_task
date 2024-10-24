@@ -3,7 +3,7 @@ using DeliveryService.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using DeliveryService.Infrastructure.Data;
 
-namespace DeliveryService.Infrastructure.Presistence
+namespace DeliveryService.Infrastructure.Persistence
 {
     public class DeliveryRequestRepository : IDeliveryRequestRepository
     {
@@ -16,7 +16,7 @@ namespace DeliveryService.Infrastructure.Presistence
 
         public async Task<DeliveryRequest?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _context.DeliveryRequests.FindAsync(id, cancellationToken);
+            return await _context.DeliveryRequests.FindAsync([id], cancellationToken);
         }
 
         public async Task<List<DeliveryRequest>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)

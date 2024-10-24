@@ -1,6 +1,6 @@
 using OrderService.Core.Models;
 
-namespace OrderService.Application.Interfaces
+namespace OrderService.Core.Interfaces
 {
     public interface IOrderRepository
     {
