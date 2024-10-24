@@ -6,7 +6,7 @@ using OutboxLibrary.Configurations;
 
 namespace OrderService.Infrastructure.Data
 {
-    public class ApplicationDBContext : DbContext, IApplicationDbContext
+    public class ApplicationDBContext : DbContext, IOutboxDbContext
     {
         public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {

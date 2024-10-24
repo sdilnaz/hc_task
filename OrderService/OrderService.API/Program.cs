@@ -25,7 +25,7 @@ builder.Services.AddAutoMapper(typeof(OutboxProfile));
 builder.Services.AddHangfireServices(builder.Configuration);
 builder.Services.AddScoped<IOutboxService, OutboxService>();
 builder.Services.AddScoped<IOutboxRepository, OutboxRepository>();
-builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDBContext>());
+builder.Services.AddScoped<IOutboxDbContext>(provider => provider.GetRequiredService<ApplicationDBContext>());
 
 var app = builder.Build();
 

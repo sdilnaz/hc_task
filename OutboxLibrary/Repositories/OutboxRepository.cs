@@ -6,9 +6,9 @@ namespace OutboxLibrary.Repositories
 {
     public class OutboxRepository : IOutboxRepository
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IOutboxDbContext _context;
 
-        public OutboxRepository(IApplicationDbContext context)
+        public OutboxRepository(IOutboxDbContext context)
         {
             _context = context;
         }
